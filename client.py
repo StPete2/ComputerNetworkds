@@ -6,7 +6,7 @@ nickname = input("Choose your nickname: ")
 
 # Connecting To Server
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('ENTER YOUR IP SERVER ADDRESS', 55555))  # прописать ip адрес сервера и порт
+client.connect(('127.0.0.1', 55555))  # прописать ip адрес сервера и порт
 
 
 # Listening to Server and Sending Nickname
@@ -15,9 +15,9 @@ def receive():
         try:
             # Receive Message From Server
             # If 'NICK' Send Nickname
-            message = client.recv(1024).decode('ascii')
+            message = client.recv(1024).decode('utf-8')
             if message == 'NICK':
-                client.send(nickname.encode('ascii'))
+                client.send(nickname.encode('utf-8'))
             else:
                 print(message)
         except Exception():
@@ -30,7 +30,7 @@ def receive():
 def write():
     while True:
         message = '{}: {}'.format(nickname, input(''))
-        client.send(message.encode('ascii'))
+        client.send(message.encode('utf-8'))
 
 
 # Starting Threads For Listening And Writing
